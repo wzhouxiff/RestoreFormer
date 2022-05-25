@@ -22,7 +22,7 @@ This repo includes the source code of the paper: "[RestoreFormer: High-Quality B
 
 **Dataset**: Both **HQ Dictionary** and **RestoreFormer** in our work are trained with **FFHQ** which attained from [FFHQ repository](https://github.com/NVlabs/ffhq-dataset). The original size of the images in FFHQ are 1024x1024. We resize them to 512x512 with bilinear interpolation in our work. Link this dataset to ./data/FFHQ/image512x512.
 
-**Model**: Both pretrained models used for training and the trained model of our RestoreFormer can be attained from [Google Driver](https://drive.google.com/file/d/13ir-VvdDNOA3LeoNbx4Y530rvIheyhRM/view?usp=sharing) or [BaiduYun (code x6nn)](链接: https://pan.baidu.com/s/1EO7_1dYyCuORpPNosQgogg?pwd=x6nn). Link these models to ./experiments.
+**Model**: Both pretrained models used for training and the trained model of our RestoreFormer can be attained from [Google Driver](https://drive.google.com/file/d/13ir-VvdDNOA3LeoNbx4Y530rvIheyhRM/view?usp=sharing) or [BaiduYun (code x6nn)](https://pan.baidu.com/s/1EO7_1dYyCuORpPNosQgogg?pwd=x6nn). Link these models to ./experiments.
 
 ## Test
     sh scripts/test.sh
