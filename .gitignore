@@ -1,0 +1,7 @@
+data/FFHQ
+scripts/data_synthetic
+experiments/
+scripts/run_clustre.sh
+sftp-config.json
+results/
+scripts/metrics

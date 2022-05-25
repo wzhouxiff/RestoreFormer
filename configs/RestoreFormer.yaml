@@ -1,0 +1,110 @@
+model:
+  base_learning_rate: 4.5e-6 
+  target: RestoreFormer.models.vqgan_v1.RestoreFormerModel
+  params:
+    image_key: 'lq'
+    ckpt_path: 'YOUR TRAINED HD DICTIONARY MODEL'
+    special_params_lr_scale: 10
+    comp_params_lr_scale: 10
+    schedule_step: [4000000, 8000000]
+    ddconfig:
+      target: RestoreFormer.modules.vqvae.vqvae_arch.VQVAEGANMultiHeadTransformer
+      params:
+        embed_dim: 256
+        n_embed: 1024
+        double_z: False
+        z_channels: 256
+        resolution: 512
+        in_channels: 3  
+        out_ch: 3
+        ch: 64
+        ch_mult: [ 1,2,2,4,4,8]  # num_down = len(ch_mult)-1
+        num_res_blocks: 2
+        dropout: 0.0
+        attn_resolutions: [16]
+        enable_mid: True
+
+        fix_decoder: False
+        fix_codebook: True
+        fix_encoder: False
+        head_size: 8
+
+    lossconfig:
+      target: RestoreFormer.modules.losses.vqperceptual.VQLPIPSWithDiscriminatorWithCompWithIdentity
+      params:
+        disc_conditional: False
+        disc_in_channels: 3
+        disc_start: 10001
+        disc_weight: 0.8
+        codebook_weight: 1.0
+        use_actnorm: False
+        comp_weight: 1.5
+        comp_style_weight: 2e3 #2000.0
+        identity_weight: 3 #1.5
+        lpips_style_weight: 1e9
+        identity_model_path: experiments/pretrained_models/arcface_resnet18.pth
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 4
+    num_workers: 8
+    train:
+      target: RestoreFormer.data.ffhq_degradation_dataset.FFHQDegradationDataset
+      params:
+        dataroot_gt: data/FFHQ/images512x512
+        io_backend:
+          type: disk
+        use_hflip: True
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]
+        out_size: 512
+
+        blur_kernel_size: [19,20]
+        kernel_list: ['iso', 'aniso']
+        kernel_prob: [0.5, 0.5]
+        blur_sigma: [0.1, 10]
+        downsample_range: [0.8, 8]
+        noise_range: [0, 20]
+        jpeg_range: [60, 100]
+
+        color_jitter_prob: ~
+        color_jitter_shift: 20
+        color_jitter_pt_prob: ~
+        gray_prob: ~
+        gt_gray: True
+
+        crop_components: True
+        component_path: experiments/pretrained_models/FFHQ_eye_mouth_landmarks_512.pth
+        eye_enlarge_ratio: 1.4
+
+
+    validation:
+      target: RestoreFormer.data.ffhq_degradation_dataset.FFHQDegradationDataset
+      params:
+        dataroot_gt: data/FFHQ/images512x512
+        io_backend:
+          type: disk
+        use_hflip: False
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]
+        out_size: 512
+
+        blur_kernel_size: [19,20]
+        kernel_list: ['iso', 'aniso']
+        kernel_prob: [0.5, 0.5]
+        blur_sigma: [0.1, 10]
+        downsample_range: [0.8, 8]
+        noise_range: [0, 20]
+        jpeg_range: [60, 100]
+
+        # color jitter and gray
+        color_jitter_prob: ~
+        color_jitter_shift: 20
+        color_jitter_pt_prob: ~
+        gray_prob: ~
+        gt_gray: True
+
+        crop_components: False
+        component_path: experiments/pretrained_models/FFHQ_eye_mouth_landmarks_512.pth
+        eye_enlarge_ratio: 1.4

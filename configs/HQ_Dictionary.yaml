@@ -1,0 +1,61 @@
+model:
+  base_learning_rate: 4.5e-6
+  target: RestoreFormer.models.vqgan_v1.RestoreFormerModel
+  params:
+    image_key: 'gt'
+    schedule_step: [400000, 800000]
+    # ignore_keys: ['vqvae.quantize.utility_counter']
+    ddconfig:
+      target: RestoreFormer.modules.vqvae.vqvae_arch.VQVAEGAN
+      params:
+        embed_dim: 256
+        n_embed: 1024
+        double_z: False
+        z_channels: 256
+        resolution: 512
+        in_channels: 3
+        out_ch: 3
+        ch: 64
+        ch_mult: [ 1,2,2,4,4,8]  # num_down = len(ch_mult)-1
+        num_res_blocks: 2
+        attn_resolutions: [16]
+        dropout: 0.0
+        enable_mid: True
+        fix_decoder: False
+        fix_codebook: False
+
+    lossconfig:
+      target: RestoreFormer.modules.losses.vqperceptual.VQLPIPSWithDiscriminatorWithCompWithIdentity
+      params:
+        disc_conditional: False
+        disc_in_channels: 3
+        disc_start: 30001
+        disc_weight: 0.8
+        codebook_weight: 1.0
+        use_actnorm: False
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 4
+    num_workers: 8
+    train:
+      target: basicsr.data.ffhq_dataset.FFHQDataset
+      params:
+        dataroot_gt: data/FFHQ/images512x512
+        io_backend:
+          type: disk
+        use_hflip: True
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]
+        out_size: 512
+    validation:
+      target: basicsr.data.ffhq_dataset.FFHQDataset
+      params:
+        dataroot_gt: data/FFHQ/images512x512
+        io_backend:
+          type: disk
+        use_hflip: False
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]
+        out_size: 512
