@@ -44,7 +44,7 @@ This repo includes the source code of the paper: "[RestoreFormer: High-Quality B
       year={2022}
     }
 
-## Ackonwledgement
+## Acknowledgement
 We thank everyone who makes their code and models available, especially [Taming Transformer](https://github.com/CompVis/taming-transformers), [basicsr](https://github.com/XPixelGroup/BasicSR), and [GFPGAN](https://github.com/TencentARC/GFPGAN).
 
 ## Contact
