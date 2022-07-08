@@ -3,7 +3,7 @@ export BASICSR_JIT=True
 conf_name='HQ_Dictionary'
 # conf_name='RestoreFormer'
 
-gpus='0,1,2,3'
+gpus='0'
 
 #P: pretrain SL: soft learning
 node_n=1
