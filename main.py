@@ -12,12 +12,12 @@ from pytorch_lightning.callbacks import ModelCheckpoint, Callback, LearningRateM
 from pytorch_lightning.utilities.distributed import rank_zero_only
 import random
 
-def get_obj_from_str(string, reload=False):
+def get_obj_from_str(string, reload=False, package=None):
     module, cls = string.rsplit(".", 1)
     if reload:
         module_imp = importlib.import_module(module)
         importlib.reload(module_imp)
-    return getattr(importlib.import_module(module, package=None), cls)
+    return getattr(importlib.import_module(module, package=package), cls)
 
 
 def get_parser(**parser_kwargs):
@@ -141,12 +141,14 @@ def nondefault_trainer_args(opt):
     return sorted(k for k in vars(args) if getattr(opt, k) != getattr(args, k))
 
 
-def instantiate_from_config(config):
+def instantiate_from_config(config, package=None):
     if not "target" in config:
         raise KeyError("Expected key `target` to instantiate.")
     if 'basicsr.data' in config["target"] or \
         'FFHQDegradationDataset' in config["target"]:
         return get_obj_from_str(config["target"])(config.get("params", dict()))
+    if config["target"][0] == '.':
+        return get_obj_from_str(config["target"][1:], package=".")(config.get("params",dict()))
     return get_obj_from_str(config["target"])(**config.get("params", dict()))
 
 
@@ -408,7 +410,7 @@ if __name__ == "__main__":
         else:
             assert os.path.isdir(opt.resume), opt.resume
             logdir = opt.resume.rstrip("/")
-            ckpt = os.path.join(logdir, "checkpoints", "last.ckpt")
+            ckpt = os.path.join(logdir, "checkpoints", "idol_last0.ckpt")
 
         opt.resume_from_checkpoint = ckpt
         base_configs = sorted(glob.glob(os.path.join(logdir, "configs/*.yaml")))
@@ -583,7 +585,7 @@ if __name__ == "__main__":
             # run all checkpoint hooks
             if trainer.global_rank == 0:
                 print("Summoning checkpoint.")
-                ckpt_path = os.path.join(ckptdir, "last.ckpt")
+                ckpt_path = os.path.join(ckptdir, "idol_last0.ckpt")
                 trainer.save_checkpoint(ckpt_path)
 
         def divein(*args, **kwargs):
