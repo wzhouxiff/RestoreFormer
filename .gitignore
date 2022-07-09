@@ -5,3 +5,8 @@ scripts/run_clustre.sh
 sftp-config.json
 results/
 scripts/metrics
+*.jpg
+*.jpeg
+*.png
+__pycache__/
+*.pyc
