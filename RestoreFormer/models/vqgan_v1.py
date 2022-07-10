@@ -27,7 +27,8 @@ class RestoreFormerModel(pl.LightningModule):
         if ckpt_path is not None:
             self.init_from_ckpt(ckpt_path, ignore_keys=ignore_keys)
 
-        if lossconfig['params']['comp_weight'] or lossconfig['params']['comp_style_weight']:
+        
+        if ('comp_weight' in lossconfig['params'] and lossconfig['params']['comp_weight']) or ('comp_style_weight' in lossconfig['params'] and lossconfig['params']['comp_style_weight']):
             self.use_facial_disc = True
         else:
             self.use_facial_disc = False
