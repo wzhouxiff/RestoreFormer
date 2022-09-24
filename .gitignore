@@ -4,4 +4,4 @@ experiments/
 scripts/run_clustre.sh
 sftp-config.json
 results/
-scripts/metrics
+# scripts/metrics
