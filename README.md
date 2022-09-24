@@ -1,5 +1,5 @@
 # Updating
-- 20220924 We add the code for metrics in scripts/metrics
+- 20220924 We add the code for **metrics** in scripts/metrics
 
 
 # RestoreFormer
