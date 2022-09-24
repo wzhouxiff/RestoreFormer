@@ -1,3 +1,7 @@
+# Updating
+- 20220924 We add the code for metrics in scripts/metrics
+
+
 # RestoreFormer
 
 This repo includes the source code of the paper: "[RestoreFormer: High-Quality Blind Face Restoration from Undegraded Key-Value Pairs](https://arxiv.org/pdf/2201.06374.pdf)" (CVPR 2022) by Zhouxia Wang, Jiawei Zhang, Runjian Chen, Wenping Wang, and Ping Luo.
@@ -29,17 +33,17 @@ This repo includes the source code of the paper: "[RestoreFormer: High-Quality B
 
 ## Training
     sh scripts/run.sh
-    
-## Metrics
-    sh scripts/metrics/run.sh
-    
-:point_up_2
 
 **Note**. 
 - The first stage is to attain **HQ Dictionary** by setting `conf_name` in scripts/run.sh to 'HQ\_Dictionary'. 
 - The second stage is blind face restoration. You need to add your trained HQ\_Dictionary model to `ckpt_path` in config/RestoreFormer.yaml and set `conf_name` in scripts/run.sh to 'RestoreFormer'.
 - Our model is trained with 4 V100 GPUs.
 
+## Metrics
+    sh scripts/metrics/run.sh
+    
+**Note**. 
+- You need to add the path of CelebA-Test dataset in the script if you want get IDD, PSRN, SSIM, LIPIS.
 
 ## Citation
     @article{wang2022restoreformer,
