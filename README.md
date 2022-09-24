@@ -29,6 +29,11 @@ This repo includes the source code of the paper: "[RestoreFormer: High-Quality B
 
 ## Training
     sh scripts/run.sh
+    
+## Metrics
+    sh scripts/metrics/run.sh
+    
+:point_up_2
 
 **Note**. 
 - The first stage is to attain **HQ Dictionary** by setting `conf_name` in scripts/run.sh to 'HQ\_Dictionary'. 
