@@ -1,6 +1,6 @@
 # Updating
 - 20221003 We provide the link of the [test datasets](#testset).
-- 20220924 We add the code for **metrics** in scripts/metrics.
+- 20220924 We add the code for [**metrics**](#metrics) in scripts/metrics.
 
 
 # RestoreFormer
@@ -42,7 +42,7 @@ This repo includes the source code of the paper: "[RestoreFormer: High-Quality B
 - The second stage is blind face restoration. You need to add your trained HQ\_Dictionary model to `ckpt_path` in config/RestoreFormer.yaml and set `conf_name` in scripts/run.sh to 'RestoreFormer'.
 - Our model is trained with 4 V100 GPUs.
 
-## Metrics
+## <a id="metrics">Metrics</a>
     sh scripts/metrics/run.sh
     
 **Note**. 
