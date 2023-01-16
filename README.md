@@ -1,5 +1,5 @@
 # Updating
-- **20230116** For convenience, we further upload the test datasets, including CelebA (both HQ and LQ data), LFW-Test, CelebChild-Test, and Webphoto-Test, to OneDrive and BaiduYun.
+- **20230116** For convenience, we further upload the [test datasets](#testset), including CelebA (both HQ and LQ data), LFW-Test, CelebChild-Test, and Webphoto-Test, to OneDrive and BaiduYun.
 - **20221003** We provide the link of the [test datasets](#testset).
 - **20220924** We add the code for [**metrics**](#metrics) in scripts/metrics.
 
