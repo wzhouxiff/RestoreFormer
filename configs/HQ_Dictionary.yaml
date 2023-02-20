@@ -23,6 +23,7 @@ model:
         enable_mid: True
         fix_decoder: False
         fix_codebook: False
+        head_size: 8
 
     lossconfig:
       target: RestoreFormer.modules.losses.vqperceptual.VQLPIPSWithDiscriminatorWithCompWithIdentity
